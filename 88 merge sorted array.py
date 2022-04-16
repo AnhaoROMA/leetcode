@@ -35,6 +35,14 @@ Note that because m = 0, there are no elements in nums1.
 The 0 is only there to ensure the merge result can fit in nums1.
 """
 
+# solution:
+# 从后往前排
+#        i        k
+# [1, 2, 4, 0, 0, 0]
+#
+#     j
+# [3, 6]
+
 
 def merge(nums1: list[int], m: int, nums2: list[int], n: int):
     i = m - 1
