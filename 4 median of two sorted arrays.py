@@ -1,3 +1,9 @@
+"""
+https://leetcode.com/problems/median-of-two-sorted-arrays/
+
+使用二分查找法！
+"""
+
 MIN_VALUE = -1000001
 MAX_VALUE = 1000001
 
