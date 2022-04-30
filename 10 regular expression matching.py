@@ -29,16 +29,14 @@ def re(s: str, p: str) -> bool:
                 if j == 0:
                     # "*"出现于字符串的开头
                     hashmap[i+1][j+1] = False
-                elif j == 1:
-                    hashmap[i+1][j+1] = hashmap[i+1][j] or hashmap[i+1][j-1] or (hashmap[i][j-2] and s[i] == p[j-1])
                 else:
-                    hashmap[i+1][j+1] = hashmap[i+1][j] or hashmap[i+1][j-1] or (hashmap[i][j] and s[i] == p[j-1])
+                    hashmap[i+1][j+1] = hashmap[i+1][j] or hashmap[i+1][j-1] or (hashmap[i][j+1] and (s[i] == p[j-1] or p[j-1] == "."))
             else:
-                hashmap[i+1][j+1] = hashmap[i][j] and s[i] == p[j]
-    print(hashmap)
+                hashmap[i+1][j+1] = hashmap[i][j] and (s[i] == p[j] or p[j] == ".")
+    # print(hashmap)
     return hashmap[-1][-1]
 
 
-string = "b"
-pattern = "a*ab"
+string = "aa"
+pattern = "a*"
 print(re(s=string, p=pattern))
