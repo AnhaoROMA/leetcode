@@ -54,18 +54,55 @@ def backtracking(board: list[str], row: int) -> bool:
     return False
 
 
+def dfs(temp):
+    origin_board = temp[0]
+    row = temp[1]
+
+    result = list()
+    for j in range(len(origin_board)):
+
+        board = list()
+        for element in origin_board:
+            board.append(element)
+
+        tmp = board[row]
+        tmp = tmp[:j] + "Q" + tmp[j+1:]
+        board[row] = tmp
+        if whether_valid(board):
+            result.append([board, row+1])
+        else:
+            tmp = board[row]
+            tmp = tmp[:j] + "." + tmp[j + 1:]
+            board[row] = tmp
+    return result
+
+
 def queens(n: int) -> list[list[str]]:
-    field = list()
-    for _ in range(n):
-        tmp = ""
-        for _ in range(n):
-            tmp += "."
-        field.append(tmp)
-    # print(field)
-    backtracking(field, 0)
-    return list()
+    result = list()
+
+    stack = list()
+    for i in range(n):
+        field = list()
+        for j in range(n):
+            tmp = ""
+            if j == 0:
+                tmp = "." * i + "Q" + "." * (n-i-1)
+            else:
+                for _ in range(n):
+                    tmp += "."
+            field.append(tmp)
+        stack.append([field, 1])
+
+    while len(stack) > 0:
+        temp = stack.pop()
+        if temp[1] == n:
+            result.append(temp[0])
+        else:
+            stack += dfs(temp)
+
+    return result
 
 
 # b = [".Q..", ".Q..", "Q...", "..Q."]
 # print(whether_valid(b))
-queens(4)
+print(queens(9))
