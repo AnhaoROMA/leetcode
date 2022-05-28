@@ -100,6 +100,124 @@ def solution(graph: list[list[int]]) -> int:
     return max(result)
 
 
+# solution 2:
+# BFS与二分法
+def duplicate_a_graph(graph: list[list[int]]) -> list[list[int]]:
+    m = len(graph)
+    n = len(graph[0])
+
+    result = list()
+    for i in range(m):
+        temp = list()
+        for j in range(n):
+            temp.append(graph[i][j])
+        result.append(temp)
+    return result
+
+
+def check(map: list[list[int]], time: int) -> bool:
+    directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+
+    graph = duplicate_a_graph(map)
+    m = len(graph)
+    n = len(graph[0])
+
+    old_fire = list()
+    for i in range(m):
+        for j in range(n):
+            if graph[i][j] == 1:
+                old_fire.append((i, j))
+
+    # 看看过了time个单位时间后，火势情况
+    while time > 0 and old_fire:
+        time -= 1
+        new_fire = list()
+        for fire in old_fire:
+            for opt in directions:
+                x = fire[0] + opt[0]
+                y = fire[1] + opt[1]
+                if x < 0 or x >= m or y < 0 or y >= n or graph[x][y] != 0:
+                    continue
+                elif x == 0 and y == 0:
+                    return False
+                else:
+                    new_fire.append(
+                        (x, y)
+                    )
+        for fire in new_fire:
+            graph[fire[0]][fire[1]] = 1
+        old_fire = new_fire
+
+    trace = [
+        [
+            [], (0, 0)
+        ]
+    ]
+    while trace:
+        # 人先走
+        new_trace = list()
+        while trace:
+            visited, pos = trace.pop()
+            for opt in directions:
+                x = opt[0] + pos[0]
+                y = opt[1] + pos[1]
+                if x < 0 or x >= m or y < 0 or y >= n or graph[x][y] != 0 or (x, y) in visited:
+                    continue
+                elif x == m - 1 and y == n - 1:
+                    return True
+                else:
+                    new_trace.append(
+                        [
+                            visited + [pos], (x, y)
+                        ]
+                    )
+
+        # 火焰蔓延
+        new_fire = list()
+        for fire in old_fire:
+            for opt in directions:
+                x = fire[0] + opt[0]
+                y = fire[1] + opt[1]
+                if x < 0 or x >= m or y < 0 or y >= n or graph[x][y] != 0:
+                    continue
+                else:
+                    new_fire.append(
+                        (x, y)
+                    )
+
+        # 淘汰不可行的路径
+        for i in range(len(new_trace)-1, -1, -1):
+            if new_trace[i][1] in new_fire:
+                new_trace.pop(i)
+
+        # 整理，准备进入下一次循环
+        trace = new_trace
+        for fire in new_fire:
+            graph[fire[0]][fire[1]] = 1
+        old_fire = new_fire
+    return False
+
+
+def main(graph: list[list[int]]) -> int:
+    m = len(graph)
+    n = len(graph[0])
+
+    left = -1
+    right = m * n
+
+    while left < right:
+        middle = int((left+right+1)/2)
+        if check(graph, middle):
+            left = middle
+        else:
+            right = middle - 1
+
+    if left < m * n:
+        return left
+    else:
+        return MAX_VALUE
+
+
 a = [
     [0, 2, 0, 0, 0, 0, 0],
     [0, 0, 0, 2, 2, 1, 0],
@@ -129,9 +247,16 @@ e = [
     [0, 2],
     [0, 0]
 ]
+
 # print(find_route(a))
-print(solution(a))
-print(solution(b))
-print(solution(c))
-print(solution(d))
-print(solution(e))
+# print(solution(a))
+# print(solution(b))
+# print(solution(c))
+# print(solution(d))
+# print(solution(e))
+
+print(main(a))
+print(main(b))
+print(main(c))
+print(main(d))
+print(main(e))
