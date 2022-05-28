@@ -9,16 +9,16 @@ If you can always reach the safehouse regardless of the minutes stayed, return 1
 Note that even if the fire spreads to the safehouse immediately after you have reached it,
 it will be counted as safely reaching the safehouse.
 """
-# solution:
-# 先找到所有可能的逃亡路径（刚开始）。
-# 然后根据火势蔓延的时间，依次淘汰路径。
-# 找出最后被淘汰的路径，即为我们的选择。
-#
-# 注意：在淘汰路径时，要考虑 火势蔓延到此路径的时间 与 人跑到该点的时间 ！
-#
 MAX_VALUE = 10 ** 9
 
 
+# solution 1 （我的解法，TLE了，但是是正确的）:
+# 先找到所有可能的逃亡路径（刚开始）。
+# 然后根据火势蔓延的时间，依次计算每条路径的最大延迟。
+# 找出最大的延迟。
+#
+# 注意：在淘汰路径时，要考虑 火势蔓延到此路径的时间 与 人跑到该点的时间 ！
+#
 def find_route(graph: list[list[int]]) -> list:
     m = len(graph)
     n = len(graph[0])
@@ -41,14 +41,6 @@ def find_route(graph: list[list[int]]) -> list:
             else:
                 dfs.append(temp + [(x, y)])
     return result
-
-
-# def whether_cross(list_1, list_2) -> bool:
-#     result = list(set(list_1) & set(list_2))
-#     if result:
-#         return True
-#     else:
-#         return False
 
 
 def solution(graph: list[list[int]]) -> int:
