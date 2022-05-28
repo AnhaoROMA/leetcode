@@ -55,18 +55,24 @@ def solution(graph: list[list[int]]) -> int:
     result = [MAX_VALUE for _ in range(num_routes)]
     filled = [False for _ in range(num_routes)]
     time_ticket = 0
+
+    old_fire = list()
+    for i in range(m):
+        for j in range(n):
+            if graph[i][j] == 1:
+                old_fire.append((i, j))
+
     while False in filled:
         new_fire = list()
-        for i in range(m):
-            for j in range(n):
-                if graph[i][j] == 1:
-                    for opt in directions:
-                        x = i + opt[0]
-                        y = j + opt[1]
-                        if x < 0 or x >= m or y < 0 or y >= n or graph[x][y] != 0 or (x, y) in new_fire:
-                            continue
-                        else:
-                            new_fire.append((x, y))
+        for fire in old_fire:
+            for opt in directions:
+                x = fire[0] + opt[0]
+                y = fire[1] + opt[1]
+                if x < 0 or x >= m or y < 0 or y >= n or graph[x][y] != 0 or (x, y) in new_fire:
+                    continue
+                else:
+                    new_fire.append((x, y))
+        old_fire = new_fire
 
         if len(new_fire) == 0:
             return MAX_VALUE
