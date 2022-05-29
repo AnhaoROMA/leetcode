@@ -136,7 +136,7 @@ def check(map: list[list[int]], time: int) -> bool:
             for opt in directions:
                 x = fire[0] + opt[0]
                 y = fire[1] + opt[1]
-                if x < 0 or x >= m or y < 0 or y >= n or graph[x][y] != 0:
+                if x < 0 or x >= m or y < 0 or y >= n or graph[x][y] != 0 or (x, y) in new_fire:
                     continue
                 elif x == 0 and y == 0:
                     return False
@@ -148,16 +148,15 @@ def check(map: list[list[int]], time: int) -> bool:
             graph[fire[0]][fire[1]] = 1
         old_fire = new_fire
 
+    visited = {(0, 0)}
     trace = [
-        [
-            [], (0, 0)
-        ]
+        (0, 0)
     ]
     while trace:
         # 人先走
         new_trace = list()
         while trace:
-            visited, pos = trace.pop()
+            pos = trace.pop()
             for opt in directions:
                 x = opt[0] + pos[0]
                 y = opt[1] + pos[1]
@@ -167,9 +166,10 @@ def check(map: list[list[int]], time: int) -> bool:
                     return True
                 else:
                     new_trace.append(
-                        [
-                            visited + [pos], (x, y)
-                        ]
+                        (x, y)
+                    )
+                    visited.add(
+                        (x, y)
                     )
 
         # 火焰蔓延
@@ -178,7 +178,7 @@ def check(map: list[list[int]], time: int) -> bool:
             for opt in directions:
                 x = fire[0] + opt[0]
                 y = fire[1] + opt[1]
-                if x < 0 or x >= m or y < 0 or y >= n or graph[x][y] != 0:
+                if x < 0 or x >= m or y < 0 or y >= n or graph[x][y] != 0 or (x, y) in new_fire:
                     continue
                 else:
                     new_fire.append(
@@ -187,7 +187,7 @@ def check(map: list[list[int]], time: int) -> bool:
 
         # 淘汰不可行的路径
         for i in range(len(new_trace)-1, -1, -1):
-            if new_trace[i][1] in new_fire:
+            if new_trace[i] in new_fire:
                 new_trace.pop(i)
 
         # 整理，准备进入下一次循环
