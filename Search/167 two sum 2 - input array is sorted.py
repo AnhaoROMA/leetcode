@@ -57,6 +57,19 @@ def solution(numbers: list[int], target: int) -> list[int]:
             return [i+1, where+1]
 
 
-print(solution([2, 7, 11, 15], 9))
-print(solution([2, 3, 4], 6))
-print(solution([-1, 0], -1))
+def solution_2(numbers: list[int], target: int) -> list[int]:
+    left = 0
+    right = len(numbers) - 1
+    while left < right:
+        if numbers[left] + numbers[right] == target:
+            return [left+1, right+1]
+        elif numbers[left] + numbers[right] < target:
+            left += 1
+        else:
+            right -= 1
+    return []
+
+
+print(solution_2([2, 7, 11, 15], 9))
+print(solution_2([2, 3, 4], 6))
+print(solution_2([-1, 0], -1))
