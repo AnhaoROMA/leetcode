@@ -39,6 +39,11 @@ def helping_hand(exp: str) -> [int, int]:
         else:
             part = exp[i:j]
             # print(part)
+            if part == "":
+                # 开头出现”-“的情况
+                i = j
+                j += 1
+                continue
             if "x" in part:
                 part = part[:-1]
                 if part == "" or part == "+":
@@ -88,3 +93,4 @@ def solve(equation: str) -> str:
 
 
 print(solve("x+5-3+x=6+x-2"))
+print(solve("-x=-1"))
