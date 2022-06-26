@@ -89,7 +89,11 @@ def cal(s: str) -> int:
 
 def calculate(s: str) -> int:
     # 首先去除空格
-    s.replace(" ", "")
+    loc = len(s) - 1
+    while loc >= 0:
+        if s[loc] == " ":
+            s = s[:loc] + s[loc+1:]
+        loc -= 1
 
     return cal(s)
 
@@ -97,3 +101,4 @@ def calculate(s: str) -> int:
 print(calculate("(((1+(4+5+2)-3)+(6+8)))+4"))
 print(calculate("1+  1"))
 print(calculate(" 2-1 + 2 "))
+print(calculate("- (3 + (4 + 5))"))
