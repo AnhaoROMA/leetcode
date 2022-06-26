@@ -57,6 +57,7 @@ def cal(s: str) -> int:
         s = s[:i] + temp + s[j+1:]
 
     # 常规计算
+    # 先简化符号，注意顺序！！！
     s = s.replace("--", "+")
     s = s.replace("-", "+-")
     s = s.replace("++", "+")
