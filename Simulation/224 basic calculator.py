@@ -41,24 +41,20 @@ def cal(s: str) -> int:
 
     # 如果公式内含有括号，则先计算所有括号的运算结果。
     # （例如，将 "1+(2+3)-(4-5)" 变为 "1+5--1"）
-    if "(" in s or ")" in s:
-        j = len(s) - 1
-        while j >= 0:
-            if s[j] == ")":
-                count = 1
-                i = j - 1
-                while i >= 0:
-                    if s[i] == ")":
-                        count += 1
-                    if s[i] == "(":
-                        count -= 1
-                        if count == 0:
-                            break
-                    i -= 1
-                temp = str(cal(s[i+1:j]))
-                s = s[:i] + temp + s[j+1:]
-                j = i
-            j -= 1
+    while ")" in s:
+        j = s.rfind(")")
+        count = 1
+        i = j - 1
+        while i >= 0:
+            if s[i] == ")":
+                count += 1
+            if s[i] == "(":
+                count -= 1
+                if count == 0:
+                    break
+            i -= 1
+        temp = str(cal(s[i+1:j]))
+        s = s[:i] + temp + s[j+1:]
 
     # 常规计算
     # 首先去除多余的符号，比如 "+-+1"、"--1"等，减号统一换成"+-"
@@ -81,6 +77,7 @@ def cal(s: str) -> int:
                     s = s[:m+1] + "+-" + s[n+1:]
                 n = m
         n -= 1
+
     # 开始计算
     array = s.split("+")
     for k in range(len(array)):
