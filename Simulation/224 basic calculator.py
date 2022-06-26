@@ -57,7 +57,9 @@ def cal(s: str) -> int:
         s = s[:i] + temp + s[j+1:]
 
     # 常规计算
+    s = s.replace("--", "+")
     s = s.replace("-", "+-")
+    s = s.replace("++", "+")
     array = s.split("+")
     for k in range(len(array)):
         if array[k] == "":
