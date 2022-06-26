@@ -57,28 +57,7 @@ def cal(s: str) -> int:
         s = s[:i] + temp + s[j+1:]
 
     # 常规计算
-    # 首先去除多余的符号，比如 "+-+1"、"--1"等，减号统一换成"+-"
-    n = len(s) - 1
-    while n >= 0:
-        if s[n] in {"+", "-"}:
-            m = n - 1
-            while m >= 0:
-                if s[m] not in {"+", "-"}:
-                    break
-                m -= 1
-            tmp = s[m+1:n+1]
-            if "-" not in tmp:
-                s = s[:m+1] + "+" + s[n+1:]
-            else:
-                frequency = tmp.count("-")
-                if frequency % 2 == 0:
-                    s = s[:m+1] + "+" + s[n+1:]
-                else:
-                    s = s[:m+1] + "+-" + s[n+1:]
-                n = m
-        n -= 1
-
-    # 开始计算
+    s = s.replace("-", "+-")
     array = s.split("+")
     for k in range(len(array)):
         if array[k] == "":
@@ -90,11 +69,7 @@ def cal(s: str) -> int:
 
 def calculate(s: str) -> int:
     # 首先去除空格
-    loc = len(s) - 1
-    while loc >= 0:
-        if s[loc] == " ":
-            s = s[:loc] + s[loc+1:]
-        loc -= 1
+    s = s.replace(" ", "")
 
     return cal(s)
 
