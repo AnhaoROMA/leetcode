@@ -79,11 +79,15 @@ def cal(s: str) -> int:
                     s = s[:m+1] + "+" + s[n+1:]
                 else:
                     s = s[:m+1] + "+-" + s[n+1:]
+                n = m
         n -= 1
     # 开始计算
     array = s.split("+")
     for k in range(len(array)):
-        array[k] = int(array[k])
+        if array[k] == "":
+            array[k] = 0
+        else:
+            array[k] = int(array[k])
     return sum(array)
 
 
@@ -102,3 +106,4 @@ print(calculate("(((1+(4+5+2)-3)+(6+8)))+4"))
 print(calculate("1+  1"))
 print(calculate(" 2-1 + 2 "))
 print(calculate("- (3 + (4 + 5))"))
+print(calculate("(5-(1+(5)))"))
