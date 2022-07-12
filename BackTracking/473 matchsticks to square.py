@@ -60,6 +60,8 @@ def dfs(nums, index, target):
         return True
     num = nums[index]
     for i in range(4):
+        if target[i] < nums[-1]:
+            return False
         if target[i] >= num:
             target[i] -= num
             if dfs(nums, index + 1, target):
@@ -80,9 +82,10 @@ def make_square(nums):
     return dfs(nums, 0, target)
 
 
-print(make_square([1, 1, 2, 2, 2]))
-print(make_square([5, 4, 3, 3, 2, 2, 1]))
-print(make_square([2, 2, 2, 2, 2, 6]))
-print(make_square([3, 3, 3, 3, 4]))
-print(make_square([5, 5, 5, 5, 4, 4, 4, 4, 3, 3, 3, 3]))
-print(make_square([13, 11, 1, 8, 6, 7, 8, 8, 6, 7, 8, 9, 8]))
+# print(make_square([1, 1, 2, 2, 2]))
+# print(make_square([5, 4, 3, 3, 2, 2, 1]))
+# print(make_square([2, 2, 2, 2, 2, 6]))
+# print(make_square([3, 3, 3, 3, 4]))
+# print(make_square([5, 5, 5, 5, 4, 4, 4, 4, 3, 3, 3, 3]))
+# print(make_square([13, 11, 1, 8, 6, 7, 8, 8, 6, 7, 8, 9, 8]))
+print(make_square([14, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 8, 9, 19]))
