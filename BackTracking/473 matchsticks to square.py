@@ -34,7 +34,7 @@ def backtracking(choices: list[int], target: int, start: int) -> bool:
         choices.pop(i)
         new_choices = choices
         if not backtracking(new_choices, target-temp, i):
-            choices = choices[:i] + [temp] + choices[i:]
+            choices.insert(i, temp)
         else:
             return True
     return False
@@ -55,3 +55,4 @@ print(make_square([1, 1, 2, 2, 2]))
 print(make_square([5, 4, 3, 3, 2, 2, 1]))
 print(make_square([2, 2, 2, 2, 2, 6]))
 print(make_square([3, 3, 3, 3, 4]))
+print(make_square([5, 5, 5, 5, 4, 4, 4, 4, 3, 3, 3, 3]))
