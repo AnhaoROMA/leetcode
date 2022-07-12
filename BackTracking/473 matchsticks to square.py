@@ -31,10 +31,11 @@ def backtracking(choices: list[int], target: int, start: int) -> bool:
         temp = choices[i]
         if temp > target:
             continue
-        if not backtracking(choices[:i]+choices[i+1:], target-temp, i):
-            choices = choices[:i] + [temp] + choices[i+1:]
+        choices.pop(i)
+        new_choices = choices
+        if not backtracking(new_choices, target-temp, i):
+            choices = new_choices[:i] + [temp] + new_choices[i+1:]
         else:
-            choices.pop(i)
             return True
 
 
