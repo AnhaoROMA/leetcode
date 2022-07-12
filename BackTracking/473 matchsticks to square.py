@@ -55,6 +55,31 @@ Output: false
 #     return True
 
 
+def dfs(nums, index, target):
+    if index == len(nums):
+        return True
+    num = nums[index]
+    for i in range(4):
+        if target[i] >= num:
+            target[i] -= num
+            if dfs(nums, index + 1, target):
+                return True
+            target[i] += num
+    return False
+
+
+def make_square(nums):
+    if not nums or len(nums) < 4:
+        return False
+    _sum = sum(nums)
+    div, mod = divmod(_sum, 4)
+    if mod != 0 or max(nums) > _sum // 4:
+        return False
+    nums.sort(reverse=True)
+    target = [div] * 4
+    return dfs(nums, 0, target)
+
+
 print(make_square([1, 1, 2, 2, 2]))
 print(make_square([5, 4, 3, 3, 2, 2, 1]))
 print(make_square([2, 2, 2, 2, 2, 6]))
