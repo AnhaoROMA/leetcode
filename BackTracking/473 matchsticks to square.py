@@ -18,38 +18,41 @@ Output: false
 """
 
 
-def backtracking(choices: list[int], target: int, start: int) -> bool:
-    """
-    判断能否从 choices 这个数组中，找到和为 target 的子数组。
-    """
-    if target == 0:
-        return True
-    length = len(choices)
-    if start == length:
-        return False
-    for i in range(start, length):
-        temp = choices[i]
-        if temp > target:
-            continue
-        choices.pop(i)
-        new_choices = choices
-        if not backtracking(new_choices, target-temp, i):
-            choices.insert(i, temp)
-        else:
-            return True
-    return False
-
-
-def make_square(matchsticks: list[int]) -> bool:
-    if sum(matchsticks) % 4 != 0:
-        return False
-    matchsticks.sort(reverse=True)
-    target = sum(matchsticks) // 4
-    # 错误思路：分开考虑
-    for _ in range(4):
-        if not backtracking(matchsticks, target, 0):
-            return False
-    return True
+#
+# 错误的解法：
+#
+# def backtracking(choices: list[int], target: int, start: int) -> bool:
+#     """
+#     判断能否从 choices 这个数组中，找到和为 target 的子数组。
+#     """
+#     if target == 0:
+#         return True
+#     length = len(choices)
+#     if start == length:
+#         return False
+#     for i in range(start, length):
+#         temp = choices[i]
+#         if temp > target:
+#             continue
+#         choices.pop(i)
+#         new_choices = choices
+#         if not backtracking(new_choices, target-temp, i):
+#             choices.insert(i, temp)
+#         else:
+#             return True
+#     return False
+#
+#
+# def make_square(matchsticks: list[int]) -> bool:
+#     if sum(matchsticks) % 4 != 0:
+#         return False
+#     matchsticks.sort(reverse=True)
+#     target = sum(matchsticks) // 4
+#     # 错误思路：分开考虑
+#     for _ in range(4):
+#         if not backtracking(matchsticks, target, 0):
+#             return False
+#     return True
 
 
 print(make_square([1, 1, 2, 2, 2]))
