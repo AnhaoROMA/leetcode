@@ -45,6 +45,7 @@ def make_square(matchsticks: list[int]) -> bool:
         return False
     matchsticks.sort(reverse=True)
     target = sum(matchsticks) // 4
+    # 错误思路：分开考虑
     for _ in range(4):
         if not backtracking(matchsticks, target, 0):
             return False
@@ -56,3 +57,4 @@ print(make_square([5, 4, 3, 3, 2, 2, 1]))
 print(make_square([2, 2, 2, 2, 2, 6]))
 print(make_square([3, 3, 3, 3, 4]))
 print(make_square([5, 5, 5, 5, 4, 4, 4, 4, 3, 3, 3, 3]))
+print(make_square([13, 11, 1, 8, 6, 7, 8, 8, 6, 7, 8, 9, 8]))
