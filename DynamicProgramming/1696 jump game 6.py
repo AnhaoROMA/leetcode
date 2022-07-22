@@ -46,6 +46,7 @@ Constraints:
 
 
 # 改进：参考第 239 题，滑动窗口
+# https://zxi.mytechroad.com/blog/dynamic-programming/leetcode-1696-jump-game-vi/
 def main(nums: list[int], k: int) -> int:
     inf = -1 * 10 ** 9
     length = len(nums)
