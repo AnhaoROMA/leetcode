@@ -35,16 +35,20 @@ def sliding_window(nums: list[int], k: int) -> list[int]:
     ans = list()
 
     index_list = list()
-    for i in range(len(nums)):
+
+    for i in range(k):
+        while index_list and nums[i] >= nums[index_list[-1]]:
+            index_list.pop()
+        index_list.append(i)
+    ans.append(nums[index_list[0]])
+
+    for i in range(k, len(nums)):
         while index_list and nums[i] >= nums[index_list[-1]]:
             index_list.pop()
         while index_list and i-index_list[0] >= k:
             index_list.pop(0)
         index_list.append(i)
         ans.append(nums[index_list[0]])
-
-    for _ in range(k-1):
-        ans.pop(0)
 
     return ans
 
