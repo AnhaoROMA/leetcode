@@ -27,22 +27,40 @@ Constraints:
 
 
 # solution: 递归（TLE） / 动态规划（最值问题的思路之一，TLE）
+# def main(nums: list[int], k: int) -> int:
+#     length = len(nums)
+#     dp = [-1*10**-10 for _ in range(length)]
+#     dp[-1] = nums[-1]
+#     i = length - 2
+#     while i >= 0:
+#         dp[i] = nums[i] + dp[i+1]
+#
+#         # dp[i] = max(
+#         #     dp[i], nums[i]+dp[i+1], nums[i]+dp[i+2], ... , nums[i]+dp[i+k]
+#         # )
+#         for j in range(1, min(k, length-1-i)+1):
+#             dp[i] = max(dp[i], nums[i]+dp[i+j])
+#
+#         i -= 1
+#     return dp[0]
+
+
+# 改进：参考第 239 题，滑动窗口
 def main(nums: list[int], k: int) -> int:
+    inf = -1 * 10 ** 9
     length = len(nums)
-    dp = [-1*10**-10 for _ in range(length)]
-    dp[-1] = nums[-1]
-    i = length - 2
-    while i >= 0:
-        dp[i] = nums[i] + dp[i+1]
-
-        # dp[i] = max(
-        #     dp[i], nums[i]+dp[i+1], nums[i]+dp[i+2], ... , nums[i]+dp[i+k]
-        # )
-        for j in range(1, min(k, length-1-i)+1):
-            dp[i] = max(dp[i], nums[i]+dp[i+j])
-
-        i -= 1
-    return dp[0]
+    dp = [inf for _ in range(length)]
+    dp[0] = nums[0]
+    index_list = [0]  # index_list 用于存储下标
+    for i in range(1, length):
+        dp[i] = nums[i] + dp[index_list[0]]
+        while index_list and dp[i] >= dp[index_list[-1]]:
+            index_list.pop()
+        while index_list and i - index_list[0] >= k:
+            index_list.pop(0)
+        index_list.append(i)
+    # print(dp)
+    return dp[-1]
 
 
 print(main([1, -1, -2, 4, -7, 3], 2))
