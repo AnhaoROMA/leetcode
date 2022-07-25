@@ -78,7 +78,12 @@ def pronounce_xxx(s: str) -> str:
                 return data_1[s[0]+"0+"] + " " + data_1[s[1]]
     else:
         if s[0] == "0":
-            return "None"
+            while s.startswith("0"):
+                s = s[1:]
+            if len(s) == 0:
+                return "None"
+            else:
+                return pronounce_xxx(s)
         temp = data_1[s[0]] + " Hundred " + pronounce_xxx(s[1:])
         if temp.endswith(" "):
             temp = temp[:-1]
@@ -99,4 +104,4 @@ def convert(num: int) -> str:
     return ans
 
 
-print(convert(100))
+print(convert(1000))
