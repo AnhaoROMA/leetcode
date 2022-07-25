@@ -63,6 +63,12 @@ def pronounce_xxx(s: str) -> str:
     if len(s) == 1:
         return data_1[s]
     elif len(s) == 2:
+        # 防止出现 "00" 这种情况
+        if s[0] == "0":
+            if s[1] == "0":
+                return ""
+            else:
+                return data_1[s[1]]
         if s[0] == "1":
             return data_1[s]
         else:
@@ -71,7 +77,12 @@ def pronounce_xxx(s: str) -> str:
             else:
                 return data_1[s[0]+"0+"] + " " + data_1[s[1]]
     else:
-        return data_1[s[0]] + " Hundred " + pronounce_xxx(s[1:])
+        if s[0] == "0":
+            return "None"
+        temp = data_1[s[0]] + " Hundred " + pronounce_xxx(s[1:])
+        if temp.endswith(" "):
+            temp = temp[:-1]
+        return temp
 
 
 def convert(num: int) -> str:
@@ -80,9 +91,12 @@ def convert(num: int) -> str:
     # print(parts)
     ans = ""
     for i in range(len(parts)):
-        ans = pronounce_xxx(parts[-1*(i+1)]) + " " + data_2[i] + " " + ans
-    ans = ans[:-2]
+        tmp = pronounce_xxx(parts[-1*(i+1)])
+        if tmp != "None":
+            ans = tmp + " " + data_2[i] + " " + ans
+    while ans.endswith(" "):
+        ans = ans[:-1]
     return ans
 
 
-print(convert(10121313))
+print(convert(100))
