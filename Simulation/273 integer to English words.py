@@ -27,7 +27,7 @@ data_1 = {
     "8": "Eight",
     "9": "Nine",
     "10": "Ten",
-    "11": "eleven",
+    "11": "Eleven",
     "12": "Twelve",
     "13": "Thirteen",
     "14": "Fourteen",
@@ -43,7 +43,7 @@ data_1 = {
     "60+": "Sixty",
     "70+": "Seventy",
     "80+": "Eighty",
-    "90+": "Ninty"
+    "90+": "Ninety"
 }
 
 data_2 = [
