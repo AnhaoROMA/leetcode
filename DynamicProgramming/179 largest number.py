@@ -42,21 +42,12 @@ def where_to_insert(array: list[str], string: str) -> int:
             向[..., "34", "332", "31", ...]中插入"3"，此时应该插在哪里？
             向[..., "34", "332", "31", ...]中插入"32456"，此时应该插在哪里？
             """
-            length_1 = len(temp)
-            length_2 = len(string)
-            for j in range(max(length_1, length_2)):
-                if j < length_1:
-                    comparison_1 = temp[j]
-                else:
-                    comparison_1 = temp[-1]
-                if j < length_2:
-                    comparison_2 = string[j]
-                else:
-                    comparison_2 = string[-1]
-                
-                if comparison_1 > comparison_2:
+            comparison_1 = temp + string
+            comparison_2 = string + temp
+            for j in range(len(comparison_1)):
+                if comparison_1[j] > comparison_2[j]:
                     break
-                elif comparison_1 < comparison_2:
+                elif comparison_1[j] < comparison_2[j]:
                     return i
                 else:
                     continue
@@ -74,7 +65,6 @@ def largest_number(nums: list[int]) -> str:
     for i in range(length):
         tmp = nums[i]
         j = where_to_insert(ans, tmp)
-        print(j)
         ans.insert(j, tmp)
     res = ""
     for c in ans:
@@ -82,6 +72,6 @@ def largest_number(nums: list[int]) -> str:
     return res
 
 
-# print(largest_number([3, 30, 34, 5, 9]))
-# print(largest_number([10, 2]))
+print(largest_number([3, 30, 34, 5, 9]))
+print(largest_number([10, 2]))
 print(largest_number([34323, 3432]))
