@@ -69,6 +69,8 @@ def largest_number(nums: list[int]) -> str:
     res = ""
     for c in ans:
         res += c
+    while len(res) > 1 and res.startswith("0"):
+        res = res[1:]
     return res
 
 
