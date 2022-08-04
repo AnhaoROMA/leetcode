@@ -26,52 +26,52 @@ def mirror_reflection(p: int, q: int) -> int:
             # （不可能是平行来的，下不再赘述）
             if last_y > cur_y:
                 # 如果落在下侧边，则落在 (may_be, 0)
-                may_be = (last_x*cur_y)//(last_y-cur_y)
+                may_be = (last_x*cur_y)/(last_y-cur_y)
                 if may_be > p:
                     # 落于右侧边，落于 (p, may_be)
-                    may_be = cur_y - (p*(last_y-cur_y))//last_x
+                    may_be = cur_y - (p*(last_y-cur_y))/last_x
                     return [p, may_be]
                 else:
                     return [may_be, 0]
             else:
                 # last_y < cur_y
                 # 如果落在上侧边，则落在 (may_be, p)
-                may_be = (last_x*(p-cur_y))//(cur_y-last_y)
+                may_be = (last_x*(p-cur_y))/(cur_y-last_y)
                 if may_be > p:
                     # 落于右侧边，落于 (p, may_be)
-                    may_be = cur_y + (p*(cur_y-last_y))//last_x
+                    may_be = cur_y + (p*(cur_y-last_y))/last_x
                     return [p, may_be]
                 else:
                     return [may_be, p]
         elif cur_x == p:
             # 此时在右侧边上
             if last_y > cur_y:
-                may_be = p - (cur_y*(p-last_x))//(last_y-cur_y)
+                may_be = p - (cur_y*(p-last_x))/(last_y-cur_y)
                 if may_be < 0:
-                    may_be = cur_y - (p*(last_y-cur_y))//(p-last_x)
+                    may_be = cur_y - (p*(last_y-cur_y))/(p-last_x)
                     return [0, may_be]
                 else:
                     return [may_be, 0]
             else:
-                may_be = p - ((p-last_x)*(p-cur_y))//(cur_y-last_y)
+                may_be = p - ((p-last_x)*(p-cur_y))/(cur_y-last_y)
                 if may_be < 0:
-                    may_be = cur_y + (p*(cur_y-last_y))//(p-last_x)
+                    may_be = cur_y + (p*(cur_y-last_y))/(p-last_x)
                     return [0, may_be]
                 else:
                     return [may_be, p]
         elif cur_y == 0:
             # 此时在下侧边上
             if last_x < cur_x:
-                may_be = ((p-cur_x)*last_y)//(cur_x-last_x)
+                may_be = ((p-cur_x)*last_y)/(cur_x-last_x)
                 if may_be > p:
-                    may_be = cur_x + (p*(cur_x-last_x))//last_y
+                    may_be = cur_x + (p*(cur_x-last_x))/last_y
                     return [may_be, p]
                 else:
                     return [p, may_be]
             else:
-                may_be = (cur_x*last_y)//(last_x-cur_x)
+                may_be = (cur_x*last_y)/(last_x-cur_x)
                 if may_be > p:
-                    may_be = cur_x - (p*(last_x-cur_x))//last_y
+                    may_be = cur_x - (p*(last_x-cur_x))/last_y
                     return [may_be, p]
                 else:
                     return [0, may_be]
@@ -79,16 +79,16 @@ def mirror_reflection(p: int, q: int) -> int:
             # cur_y == p
             # 此时在上侧边上
             if last_x < cur_x:
-                may_be = cur_x + (p*(cur_x-last_x))//(p-last_y)
+                may_be = cur_x + (p*(cur_x-last_x))/(p-last_y)
                 if may_be > p:
-                    may_be = p - ((p-last_y)*(p-cur_x))//(cur_x-last_x)
+                    may_be = p - ((p-last_y)*(p-cur_x))/(cur_x-last_x)
                     return [p, may_be]
                 else:
                     return [may_be, 0]
             else:
-                may_be = p - (cur_x*(p-last_y))//(last_x-cur_x)
+                may_be = p - (cur_x*(p-last_y))/(last_x-cur_x)
                 if may_be < 0:
-                    may_be = cur_x - (p*(last_x-cur_x))//(p-last_y)
+                    may_be = cur_x - (p*(last_x-cur_x))/(p-last_y)
                     return [may_be, 0]
                 else:
                     return [0, may_be]
@@ -98,13 +98,13 @@ def mirror_reflection(p: int, q: int) -> int:
     m = 0  # last_x
     n = 0  # last_y
     while True:
-        if x == p and y == 0:
+        if abs(x-p) < 0.0001 and abs(y) < 0.0001:
             # 此时位于右下角
             return 0
-        elif x == p and y == p:
+        elif abs(x-p) < 0.0001 and abs(y-p) < 0.0001:
             # 此时位于右上角
             return 1
-        elif x == 0 and y == p:
+        elif abs(x) < 0.0001 and abs(y-p) < 0.0001:
             # 此时位于左上角
             return 2
         else:
@@ -115,6 +115,7 @@ def mirror_reflection(p: int, q: int) -> int:
             y = next_y
 
 
-# print(mirror_reflection(2, 1))
-# print(mirror_reflection(3, 1))
+print(mirror_reflection(2, 1))
+print(mirror_reflection(3, 1))
 print(mirror_reflection(3, 2))
+print(mirror_reflection(4, 3))
